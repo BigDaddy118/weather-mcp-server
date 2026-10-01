@@ -1,126 +1,33 @@
 # Weather MCP Server
 
-真实天气查询 MCP 服务器，基于 HelloAgents 框架开发。
+真实天气查询 MCP 服务器（**Streamable HTTP**），可填入 Smithery 的 MCP Server URL。
 
-## 功能特性
-
-- 🌤️ 实时天气查询
-- 🌍 支持12个中国主要城市
-- 🔄 使用 wttr.in API（无需密钥）
-- 🚀 基于 HelloAgents 框架
-
-## 安装
+## 本地运行
 
 ```bash
-pip install hello-agents requests
-```
-
-## 使用方法
-
-### 直接运行
-
-```bash
+pip install -r requirements.txt
 python server.py
+# 默认: http://0.0.0.0:8081/mcp
 ```
 
-### 在 Claude Desktop 中使用
+## Smithery 表单怎么填
 
-编辑 `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) 或 `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+1. **Namespace / Server ID**: `BigDaddy118` / `weather-mcp-server`
+2. **MCP Server URL**: 填部署后的公网地址，例如 `https://你的域名/mcp`（不能填 GitHub 仓库地址）
 
-```json
-{
-  "mcpServers": {
-    "weather": {
-      "command": "python",
-      "args": ["/path/to/server.py"]
-    }
-  }
-}
+## Docker
+
+```bash
+docker build -t weather-mcp-server .
+docker run -p 8081:8081 weather-mcp-server
 ```
 
-### 在 HelloAgents 中使用
+## 工具
 
-```python
-from hello_agents import SimpleAgent, HelloAgentsLLM
-from hello_agents.tools import MCPTool
-
-agent = SimpleAgent(name="天气助手", llm=HelloAgentsLLM())
-weather_tool = MCPTool(server_command=["python", "server.py"])
-agent.add_tool(weather_tool)
-
-response = agent.run("北京今天天气怎么样？")
-```
-
-## API 工具
-
-### get_weather
-
-获取指定城市的当前天气。
-
-**参数：**
-- `city` (string): 城市名称（支持中文和英文）
-
-**示例：**
-```json
-{
-  "city": "北京"
-}
-```
-
-**返回：**
-```json
-{
-  "city": "北京",
-  "temperature": 10.0,
-  "feels_like": 9.0,
-  "humidity": 94,
-  "condition": "Light rain",
-  "wind_speed": 1.7,
-  "visibility": 10.0,
-  "timestamp": "2025-10-09 13:25:03"
-}
-```
-
-### list_supported_cities
-
-列出所有支持的中文城市。
-
-**返回：**
-```json
-{
-  "cities": ["北京", "上海", "广州", "深圳", "杭州", "成都", "重庆", "武汉", "西安", "南京", "天津", "苏州"],
-  "count": 12
-}
-```
-
-### get_server_info
-
-获取服务器信息。
-
-**返回：**
-```json
-{
-  "name": "Weather MCP Server",
-  "version": "1.0.0",
-  "tools": ["get_weather", "list_supported_cities", "get_server_info"]
-}
-```
-
-## 支持的城市
-
-北京、上海、广州、深圳、杭州、成都、重庆、武汉、西安、南京、天津、苏州
-
-也支持使用英文城市名查询全球任意城市。
+- `get_weather(city)`
+- `list_supported_cities()`
+- `get_server_info()`
 
 ## 许可证
 
-MIT License
-
-## 作者
-
-[BigDaddy118](https://github.com/BigDaddy118)（基于 HelloAgents 教程）
-
-## 仓库
-
-https://github.com/BigDaddy118/weather-mcp-server
-
+MIT

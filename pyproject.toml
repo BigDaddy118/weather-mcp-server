@@ -5,15 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "weather-mcp-server"
 version = "1.0.0"
-description = "Real-time weather query MCP server based on HelloAgents framework"
+description = "Real-time weather query MCP server (Streamable HTTP)"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "HelloAgents Team", email = "jjyaoao@126.com"}
+    {name = "BigDaddy118"}
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "hello-agents>=0.2.2",
+    "fastmcp>=2.0.0",
     "requests>=2.31.0",
 ]
 
@@ -24,4 +24,3 @@ Repository = "https://github.com/BigDaddy118/weather-mcp-server"
 
 [tool.setuptools]
 py-modules = ["server"]
-
